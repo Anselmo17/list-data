@@ -13,10 +13,20 @@ import { withStyles } from '@material-ui/core/styles';
 import { intlShape } from 'react-intl';
 import Button from '@material-ui/core/Button';
 
+//COMPONENT COMBOS
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+
 // MOCK JSON
 // const dataList = require('./componentes/mock');
 
 const style = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
   title: {
     fontSize: '40px',
     color: 'black',
@@ -28,12 +38,30 @@ const style = theme => ({
   table: {
     border: '15px',
     overflow: 'auto'
-  }
+  },
+  top: {
+    marginTop: '20px',
+  },
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
+  },
 });
 
 
 class App extends React.Component {
 
+// state inicial aplicação
+  state = {
+    age: '',
+    name: 'hai',
+    labelWidth: 0,
+  };
+
+  //funcao pega a mudança de estado 
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   render() {
     const { classes } = this.props;
@@ -50,17 +78,17 @@ class App extends React.Component {
       worksheet.columns = [
         { header: 'CADASTRO_UID' },
         { header: 'NOME DA PESSOA' },
-        { header: 'ANO'},
-        { header: 'MODELO CARRO'},
+        { header: 'ANO' },
+        { header: 'MODELO CARRO' },
         { header: 'PLACA' },
         { header: 'ESTADO' }
       ];
 
-      
+
       const list = [
         {
           guid: 'a776fc96-2a79-484e-9274-f39b7fe6f35b',
-          name:'Violet',
+          name: 'Violet',
           ano: 2019,
           modelo: 'scort',
           placa: 'UUT0088',
@@ -116,7 +144,7 @@ class App extends React.Component {
         },
         {
           guid: '12aa4679-8847-4fb7-b556-31bebd6be3f6',
-          name:'Tameka',
+          name: 'Tameka',
           ano: 2001,
           modelo: 'opalla',
           placa: 'QAS8900',
@@ -132,7 +160,7 @@ class App extends React.Component {
         },
         {
           guid: '8110273d-bba0-4f29-8468-dfb3b0b76006',
-          name:  'Johanna',
+          name: 'Johanna',
           ano: 2019,
           modelo: 'palio',
           placa: 'ZXC6600',
@@ -192,6 +220,7 @@ class App extends React.Component {
         });
     };
 
+
     return (
 
       // CONTAINER TABLE 
@@ -206,16 +235,63 @@ class App extends React.Component {
         </Grid>
 
         {/* BOTAO PARA FAZER DOWNLOADS  */}
-        <Grid container spacing={16}>
+        <Grid container >
           <Grid item xs={12}>
-            <Button variant="contained"
-              color="primary"
-              className={classes.button}
-              onClick={reports}
-            >EXPORTAR EXCEL</Button>
+            <Paper className={classes.top}>
+              <Typography variant="h6" component="h3">
+                Exportação da tabela 
+            </Typography>
+              <Button variant="contained"
+                color="primary"
+                className={classes.button}
+                onClick={reports}
+              >EXPORTAR EXCEL</Button>
+            </Paper>
           </Grid>
         </Grid>
-        
+
+        {/* CRIACAO DO CONTAINER FORMULARIO */}
+        <Grid container>
+          <Grid item xs={12}>
+            <Paper className={classes.top}>
+
+              <Grid container>
+                <Grid item xs={8}>
+                  <form className={classes.root} autoComplete="off">
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="age-simple">Anos</InputLabel>
+                      <Select
+                        value={this.state.age}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-simple',
+                        }}
+                      >
+                        <MenuItem value={null}>
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>10</MenuItem>
+                        <MenuItem value={20}>20</MenuItem>
+                        <MenuItem value={30}>30</MenuItem>
+                        <MenuItem value={10}>40</MenuItem>
+                        <MenuItem value={20}>50</MenuItem>
+                        <MenuItem value={30}>60</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </form>
+                </Grid>
+                <Grid item xs={4}>
+                <Button variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={reports}
+                >Enviar informacoes </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        </Grid>
       </Grid>
 
     );
