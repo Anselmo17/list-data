@@ -24,7 +24,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 
 const style = theme => ({
   root: {
-    display: 'flex',
+    display: '100%',
+
     flexWrap: 'wrap',
   },
   title: {
@@ -41,19 +42,36 @@ const style = theme => ({
   },
   top: {
     marginTop: '20px',
+    marginLeft: '10px',
+    marginRight: '10px'
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 120,
+    minWidth: '90%',
+    marginLeft: '10px'
   },
+  subTittle: {
+    color: 'red',
+    align: 'center',
+    background: 'black',
+    borderRadius: '22px',
+    textAlign: 'center',
+    marginLeft: '2%',
+    marginRight: '2%',
+    fontSize: '1em',
+  },
+  border: {
+    border: '5px'
+  }
 });
 
 
 class App extends React.Component {
 
-// state inicial aplicação
+  // state inicial aplicação
   state = {
     age: '',
+    ageExp: 0,
     name: 'hai',
     labelWidth: 0,
   };
@@ -67,9 +85,11 @@ class App extends React.Component {
     const { classes } = this.props;
 
 
+    //funcao para montat o excel 
     const reports = () => {
       const workbook = new Excel.Workbook();
 
+      //created a folha excel
       workbook.created = new Date();
 
       const worksheet = workbook.addWorksheet();
@@ -85,6 +105,7 @@ class App extends React.Component {
       ];
 
 
+      //list de data
       const list = [
         {
           guid: 'a776fc96-2a79-484e-9274-f39b7fe6f35b',
@@ -239,7 +260,7 @@ class App extends React.Component {
           <Grid item xs={12}>
             <Paper className={classes.top}>
               <Typography variant="h6" component="h3">
-                Exportação da tabela 
+                Exportação da tabela
             </Typography>
               <Button variant="contained"
                 color="primary"
@@ -250,16 +271,15 @@ class App extends React.Component {
           </Grid>
         </Grid>
 
-        {/* CRIACAO DO CONTAINER FORMULARIO */}
-        <Grid container>
-          <Grid item xs={12}>
+        {/* CRIACAO DO CONTAINER REQUISITOS */}
+        <Grid container className={classes.border}>
+          <Grid item xs={8}>
             <Paper className={classes.top}>
-
-              <Grid container>
-                <Grid item xs={8}>
+              <Grid container >
+                <Grid item xs={4} md={4}>
                   <form className={classes.root} autoComplete="off">
                     <FormControl className={classes.formControl}>
-                      <InputLabel htmlFor="age-simple">Anos</InputLabel>
+                      <InputLabel htmlFor="age-simple">Cidade</InputLabel>
                       <Select
                         value={this.state.age}
                         onChange={this.handleChange}
@@ -271,26 +291,107 @@ class App extends React.Component {
                         <MenuItem value={null}>
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>10</MenuItem>
-                        <MenuItem value={20}>20</MenuItem>
-                        <MenuItem value={30}>30</MenuItem>
-                        <MenuItem value={10}>40</MenuItem>
-                        <MenuItem value={20}>50</MenuItem>
-                        <MenuItem value={30}>60</MenuItem>
+                        <MenuItem value={10}>São Paulo</MenuItem>
+                        <MenuItem value={20}>Minas Gerais</MenuItem>
+                        <MenuItem value={30}>Bahia</MenuItem>
+                        <MenuItem value={10}>Porto Alegre</MenuItem>
+                        <MenuItem value={20}>Roraima</MenuItem>
+                        <MenuItem value={30}>Acre</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </form>
+                </Grid>
+                <Grid item xs={4} md={4}>
+                  <form className={classes.root} autoComplete="off">
+                    <FormControl className={classes.formControl}>
+                      <InputLabel htmlFor="age-simple">Profissão</InputLabel>
+                      <Select
+                        value={this.state.age}
+                        onChange={this.handleChange}
+                        inputProps={{
+                          name: 'age',
+                          id: 'age-simple',
+                        }}
+                      >
+                        <MenuItem value={null}>
+                          <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>Engenheiro</MenuItem>
+                        <MenuItem value={20}>Programador</MenuItem>
+                        <MenuItem value={30}>Mecanico</MenuItem>
+                        <MenuItem value={10}>Alpinista</MenuItem>
+                        <MenuItem value={20}>Médico</MenuItem>
+                        <MenuItem value={30}>Reporter</MenuItem>
                       </Select>
                     </FormControl>
                   </form>
                 </Grid>
                 <Grid item xs={4}>
-                <Button variant="contained"
-                  color="primary"
-                  className={classes.button}
-                  onClick={reports}
-                >Enviar informacoes </Button>
+                  <Button variant="contained"
+                    color="primary"
+                    style={{
+                      marginTop: '13px',
+                      width: '90%'
+                    }}
+                    className={classes.button}
+                    onClick={reports}
+                  >Enviar informacoes </Button>
                 </Grid>
               </Grid>
             </Paper>
           </Grid>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper>
+            <Grid container >
+              <Grid item xs={6} >
+                <form className={classes.root} autoComplete="off">
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="age-simple">Anos</InputLabel>
+                    <Select
+                      value={this.state.ageExp}
+                      onChange={this.handleChange}
+                      inputProps={{
+                        name: 'ageExp',
+                        id: 'age-simple',
+                      }}
+                    >
+                      <MenuItem value={null}>
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={1}>1</MenuItem>
+                      <MenuItem value={2}>2</MenuItem>
+                      <MenuItem value={3}>3</MenuItem>
+                      <MenuItem value={4}>4</MenuItem>
+                      <MenuItem value={5}>5</MenuItem>
+                      <MenuItem value={6}>6</MenuItem>
+                    </Select>
+                  </FormControl>
+                </form>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+                <form className={classes.root} autoComplete="off">
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="age-simple">Tem experiência?</InputLabel>
+                    <Select
+                      value={this.state.age}
+                      onChange={this.handleChange}
+                      inputProps={{
+                        name: 'age',
+                        id: 'age-simple',
+                      }}
+                    >
+                      <MenuItem value={undefined}>
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={true}>Sim</MenuItem>
+                      <MenuItem value={false}>Não</MenuItem>
+                    </Select>
+                  </FormControl>
+                </form>
+              </Grid>
+            </Grid >
+          </Paper>
         </Grid>
       </Grid>
 
