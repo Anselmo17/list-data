@@ -13,19 +13,26 @@ import { withStyles } from '@material-ui/core/styles';
 import { intlShape } from 'react-intl';
 import Button from '@material-ui/core/Button';
 
+//COMPONENTS VIEWS CARDS 
+import Cards from './componentes/cardImages';
+
+
 //COMPONENT COMBOS
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 
+//  DIVIDE AS INFORMATION 
+import Divider from '@material-ui/core/Divider';
+
 // MOCK JSON
 // const dataList = require('./componentes/mock');
 
+//STYLE COMPONENT PAGE
 const style = theme => ({
   root: {
     display: '100%',
-
     flexWrap: 'wrap',
   },
   title: {
@@ -43,12 +50,14 @@ const style = theme => ({
   top: {
     marginTop: '20px',
     marginLeft: '10px',
-    marginRight: '10px'
+    marginRight: '10px',
+    marginBottom: '10px',
+    textAlign: 'center'
   },
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: '90%',
-    marginLeft: '10px'
+    minWidth: '96%',
+    marginLeft: '2%'
   },
   subTittle: {
     color: 'red',
@@ -62,8 +71,28 @@ const style = theme => ({
   },
   border: {
     border: '5px'
+  },
+  mercado: {
+    top: '10px',
   }
 });
+
+
+//MOCK CONDITION 
+const list = [
+  {
+    condition: 'Sim',
+    flag: true
+  },
+  {
+    condition: 'Não',
+    flag: false
+  },
+  {
+    condition: 'Pouca experiência',
+    flag: true
+  }
+];
 
 
 class App extends React.Component {
@@ -72,13 +101,24 @@ class App extends React.Component {
   state = {
     age: '',
     ageExp: 0,
+    city: '',
+    time: '',
     name: 'hai',
+    profissao: '',
     labelWidth: 0,
   };
 
   //funcao pega a mudança de estado 
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+
+    //PEGA OS VALORES DOS CAMPOS 
+    this.setState({
+      [event.target.name]: event.target.value,
+      [event.target.age]: event.target.value,
+      [event.target.ageExp]: event.target.value,
+      [event.target.city]: event.target.value,
+      [event.target.time]: event.target.value
+    });
   };
 
   render() {
@@ -260,77 +300,86 @@ class App extends React.Component {
           <Grid item xs={12}>
             <Paper className={classes.top}>
               <Typography variant="h6" component="h3">
-                Exportação da tabela
-            </Typography>
+                Exportar Tabela
+             </Typography>
               <Button variant="contained"
                 color="primary"
                 className={classes.button}
+                style={{ marginBottom: '.5%' }}
                 onClick={reports}
               >EXPORTAR EXCEL</Button>
             </Paper>
           </Grid>
         </Grid>
 
-        {/* CRIACAO DO CONTAINER REQUISITOS */}
+        {/* CRIACAO DO CONTAINER MERCADO DE TRABALHO */}
         <Grid container className={classes.border}>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <Paper className={classes.top}>
               <Grid container >
                 <Grid item xs={4} md={4}>
                   <form className={classes.root} autoComplete="off">
+                    <Typography style={{ textAlign: 'left', marginLeft: '2%' }}>
+                      Escolha uma cidade:
+                  </Typography>
+                    <Divider style={{ marginLeft: '1%' }} />
                     <FormControl className={classes.formControl}>
-                      <InputLabel htmlFor="age-simple">Cidade</InputLabel>
+                      <InputLabel htmlFor="city-simple">Cidade</InputLabel>
                       <Select
-                        value={this.state.age}
+                        value={this.state.city}
                         onChange={this.handleChange}
                         inputProps={{
-                          name: 'age',
-                          id: 'age-simple',
+                          name: 'city',
+                          id: 'city',
                         }}
                       >
                         <MenuItem value={null}>
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>São Paulo</MenuItem>
-                        <MenuItem value={20}>Minas Gerais</MenuItem>
-                        <MenuItem value={30}>Bahia</MenuItem>
-                        <MenuItem value={10}>Porto Alegre</MenuItem>
-                        <MenuItem value={20}>Roraima</MenuItem>
-                        <MenuItem value={30}>Acre</MenuItem>
+                        <MenuItem value={'São Paulo'}>São Paulo</MenuItem>
+                        <MenuItem value={'Minas Gerais'}>Minas Gerais</MenuItem>
+                        <MenuItem value={'Bahia'}>Bahia</MenuItem>
+                        <MenuItem value={'Porto Alegre'}>Porto Alegre</MenuItem>
+                        <MenuItem value={'Roraima'}>Roraima</MenuItem>
+                        <MenuItem value={'Acre'}>Acre</MenuItem>
                       </Select>
                     </FormControl>
                   </form>
                 </Grid>
                 <Grid item xs={4} md={4}>
                   <form className={classes.root} autoComplete="off">
+                    <Typography style={{ textAlign: 'left', marginLeft: '2%' }}>
+                      Escolha uma Profissão:
+                  </Typography>
+                    <Divider />
                     <FormControl className={classes.formControl}>
-                      <InputLabel htmlFor="age-simple">Profissão</InputLabel>
+                      <InputLabel htmlFor="prof-simple">Profissão</InputLabel>
                       <Select
-                        value={this.state.age}
+                        value={this.state.profissao}
                         onChange={this.handleChange}
                         inputProps={{
-                          name: 'age',
-                          id: 'age-simple',
+                          name: 'profissao',
+                          id: 'prof-simple',
                         }}
                       >
                         <MenuItem value={null}>
                           <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>Engenheiro</MenuItem>
-                        <MenuItem value={20}>Programador</MenuItem>
-                        <MenuItem value={30}>Mecanico</MenuItem>
-                        <MenuItem value={10}>Alpinista</MenuItem>
-                        <MenuItem value={20}>Médico</MenuItem>
-                        <MenuItem value={30}>Reporter</MenuItem>
+                        <MenuItem value={1}>Engenheiro</MenuItem>
+                        <MenuItem value={2}>Programador</MenuItem>
+                        <MenuItem value={3}>Mecanico</MenuItem>
+                        <MenuItem value={4}>Alpinista</MenuItem>
+                        <MenuItem value={5}>Médico</MenuItem>
+                        <MenuItem value={6}>Reporter</MenuItem>
                       </Select>
                     </FormControl>
                   </form>
                 </Grid>
                 <Grid item xs={4}>
                   <Button variant="contained"
-                    color="primary"
+                    color="secondary"
                     style={{
-                      marginTop: '13px',
+                      marginTop: '30px',
                       width: '90%'
                     }}
                     className={classes.button}
@@ -341,19 +390,34 @@ class App extends React.Component {
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={4}>
+
+        {/* Images Cards */}
+        <Grid container>
+          <Cards />
+        </Grid>
+
+
+        <Grid item xs={12}>
           <Paper>
-            <Grid container >
+            <Typography component='h2' variant='h5' gutterBottom style={{ textAlign: 'center' }}>
+              Tempo no mercado de trabalho:
+            </Typography>
+
+            {/* DIVIDE -  CONTEUDO APRENSENTADO  */}
+            <Divider />
+
+            {/* CONTAINER TEMPO DE TRABALHO */}
+            <Grid container className={classes.mercado}>
               <Grid item xs={6} >
                 <form className={classes.root} autoComplete="off">
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">Anos</InputLabel>
+                    <InputLabel htmlFor="ageExp-simple">Anos de experiência(Opcional)</InputLabel>
                     <Select
                       value={this.state.ageExp}
                       onChange={this.handleChange}
                       inputProps={{
                         name: 'ageExp',
-                        id: 'age-simple',
+                        id: 'ageExp-simple',
                       }}
                     >
                       <MenuItem value={null}>
@@ -372,20 +436,20 @@ class App extends React.Component {
               <Grid item xs={6} sm={6}>
                 <form className={classes.root} autoComplete="off">
                   <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">Tem experiência?</InputLabel>
+                    <InputLabel htmlFor="time-simple">Tem experiência?</InputLabel>
                     <Select
-                      value={this.state.age}
+                      value={this.state.time}
                       onChange={this.handleChange}
                       inputProps={{
-                        name: 'age',
-                        id: 'age-simple',
+                        name: 'time',
+                        id: 'time-simple',
                       }}
                     >
-                      <MenuItem value={undefined}>
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={true}>Sim</MenuItem>
-                      <MenuItem value={false}>Não</MenuItem>
+                      {
+                        list.map((item, index) => {
+                          return <MenuItem value={item.flag} key={index} >{item.condition}</MenuItem>
+                        })
+                      }
                     </Select>
                   </FormControl>
                 </form>
